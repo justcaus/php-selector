@@ -1,0 +1,118 @@
+#!/bin/bash
+
+# JastCayz
+
+clear # Очистка экрана
+
+echo "          Список"
+echo "          ------"
+echo "Выберите версию Vesta-PHP:"
+echo
+echo "[1] 7.0 PHP"
+echo "[2] 7.1 PHP"
+echo "[3] 7.2 PHP"
+echo "[4] 7.3 PHP"
+echo "[5] 7.4 PHP"
+echo "[6] 5.6 PHP"
+echo "[7] PHP redis,php-memcache"
+echo
+
+read version
+
+case "$version" in
+
+
+  "1" )
+sudo yum update -y > /dev/null
+curl -O http://vestacp.com/pub/vst-install.sh
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+echo "[mariadb]" > /etc/yum.repos.d/MariaDB.repo
+echo "name = MariaDB" >> /etc/yum.repos.d/MariaDB.repo
+echo "baseurl = http://yum.mariadb.org/10.3/centos7-amd64" >> /etc/yum.repos.d/MariaDB.repo
+echo "gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB" >> /etc/yum.repos.d/MariaDB.repo
+echo "gpgcheck=1" >> /etc/yum.repos.d/MariaDB.repo
+yum update -y
+yum-config-manager --enable remi-php70
+bash vst-install.sh
+  ;;
+
+  "2" )
+sudo yum update -y > /dev/null
+curl -O http://vestacp.com/pub/vst-install.sh
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+yum update -y
+yum-config-manager --enable remi-php71
+bash vst-install.sh
+  ;;
+
+  "3" )
+sudo yum update -y > /dev/null
+curl -O http://vestacp.com/pub/vst-install.sh
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+yum update -y
+yum-config-manager --enable remi-php72
+bash vst-install.sh
+  ;;
+
+  "4" )
+sudo yum update -y > /dev/null
+curl -O http://vestacp.com/pub/vst-install.sh
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+yum update -y
+yum-config-manager --enable remi-php73
+bash vst-install.sh
+  ;;
+
+  "5" )
+sudo yum update -y > /dev/null
+curl -O http://vestacp.com/pub/vst-install.sh
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+yum update -y
+yum-config-manager --enable remi-php74
+bash vst-install.sh
+  ;;
+
+  "6" )
+sudo yum update -y > /dev/null
+curl -O http://vestacp.com/pub/vst-install.sh
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+yum update -y
+yum-config-manager --enable remi-php56
+bash vst-install.sh
+  ;;
+
+  "7" )
+sudo yum install -y php-memcache php-memcached php-redis  > /dev/null
+  ;;
+
+          * )
+
+   echo
+   echo "Нет данных."
+  ;;
+
+esac
+
+echo "Current version: $( php -v | head -n 1 | cut -c-7 )"
+
+echo
+
+exit 0
