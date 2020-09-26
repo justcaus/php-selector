@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Грубый пример базы данных
-
 clear # Очистка экрана
 
 echo "          Список"
@@ -20,7 +18,6 @@ echo
 read version
 
 case "$version" in
-# Обратите внимание: переменная взята в кавычки.
 
   "1" )
 sudo apt-get update > /dev/null
@@ -40,8 +37,6 @@ sudo a2enmod php7.0
 sudo service apache2 restart
 sudo ln -sfn /usr/bin/php7.0 /etc/alternatives/php
   ;;
-# Обратите внимание: блок кода, анализирующий конкретный выбор, завершается
-# двумя символами "точка-с-запятой".
 
   "2" )
 sudo apt-get update > /dev/null
@@ -142,11 +137,8 @@ sudo ln -sfn /usr/bin/php5.6 /etc/alternatives/php
 sudo apt-get install -y php-memcache php-memcached php-redis  > /dev/null
   ;;
 
-# Информация о Smith и Zane будет добавлена позднее.
-
           * )
-   # Выбор по-умолчанию.
-   # "Пустой" ввод тоже обрабатывается здесь.
+
    echo
    echo "Нет данных."
   ;;
