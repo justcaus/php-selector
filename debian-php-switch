@@ -1,0 +1,194 @@
+#!/bin/bash
+
+# JastCayz
+
+clear # Очистка экрана
+
+echo "          Список"
+echo "          ------"
+echo "Выберите версию Vesta-PHP:"
+echo
+echo "[1] 7.0 PHP"
+echo "[2] 7.1 PHP"
+echo "[3] 7.2 PHP"
+echo "[4] 7.3 PHP"
+echo "[5] 7.4 PHP"
+echo "[6] 5.6 PHP"
+echo "[7] PHP redis,php-memcache"
+echo "[8] mariadb 10.3"
+echo "[9] PHP Extension mysql,mbstring..."
+echo "[10] PHP ioncube"
+echo
+
+read version
+
+
+io=$(php -v |head -n1 |cut -c5-7)
+
+
+case "$version" in
+
+
+  "1" )
+sudo yum update -y && yum install wget -y > /dev/null
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+yum update -y
+yum-config-manager --disable remi-php74
+yum-config-manager --disable remi-php73
+yum-config-manager --disable remi-php72
+yum-config-manager --disable remi-php71
+yum-config-manager --disable remi-php70
+yum-config-manager --disable remi-php56
+yum-config-manager --enable remi-php70
+yum remove php-mcrypt -y
+yum distro-sync -y
+yum install php-crypt -y
+systemctl restart httpd
+  ;;
+
+  "2" )
+sudo yum update -y && yum install wget -y > /dev/null
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+yum update -y
+yum-config-manager --disable remi-php74
+yum-config-manager --disable remi-php73
+yum-config-manager --disable remi-php72
+yum-config-manager --disable remi-php71
+yum-config-manager --disable remi-php70
+yum-config-manager --disable remi-php56
+yum-config-manager --enable remi-php71
+yum remove php-mcrypt -y
+yum distro-sync -y
+yum install php-crypt -y
+systemctl restart httpd
+  ;;
+
+  "3" )
+sudo yum update -y && yum install wget -y > /dev/null
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+yum update -y
+yum-config-manager --disable remi-php74
+yum-config-manager --disable remi-php73
+yum-config-manager --disable remi-php72
+yum-config-manager --disable remi-php71
+yum-config-manager --disable remi-php70
+yum-config-manager --disable remi-php56
+yum-config-manager --enable remi-php72
+yum remove php-mcrypt -y
+yum distro-sync -y
+yum install php-crypt -y
+systemctl restart httpd
+  ;;
+
+  "4" )
+sudo yum update -y && yum install wget -y > /dev/null
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+yum update -y
+yum-config-manager --disable remi-php74
+yum-config-manager --disable remi-php73
+yum-config-manager --disable remi-php72
+yum-config-manager --disable remi-php71
+yum-config-manager --disable remi-php70
+yum-config-manager --disable remi-php56
+yum-config-manager --enable remi-php73
+yum remove php-mcrypt -y
+yum distro-sync -y
+yum install php-crypt -y
+systemctl restart httpd
+  ;;
+
+  "5" )
+sudo yum update -y && yum install wget -y > /dev/null
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+yum update -y
+yum-config-manager --disable remi-php74
+yum-config-manager --disable remi-php73
+yum-config-manager --disable remi-php72
+yum-config-manager --disable remi-php71
+yum-config-manager --disable remi-php70
+yum-config-manager --disable remi-php56
+yum-config-manager --enable remi-php74
+yum remove php-mcrypt -y
+yum distro-sync -y
+yum install php-crypt -y
+systemctl restart httpd
+  ;;
+
+  "6" )
+sudo yum update -y && yum install wget -y > /dev/null
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+yum update -y
+yum-config-manager --disable remi-php74
+yum-config-manager --disable remi-php73
+yum-config-manager --disable remi-php72
+yum-config-manager --disable remi-php71
+yum-config-manager --disable remi-php70
+yum-config-manager --disable remi-php56
+yum-config-manager --enable remi-php56
+yum remove php -y
+yum install php -y
+systemctl restart httpd
+  ;;
+
+  "7" )
+sudo yum install -y php-memcache php-memcached php-redis  > /dev/null
+  ;;
+
+  "8" )
+systemctl stop mysql
+cp -r /var/lib/mysql /var/lib/mysqlbackup
+yum remove mariadb-server -y
+echo "[mariadb]" > /etc/yum.repos.d/MariaDB.repo
+echo "name = MariaDB" >> /etc/yum.repos.d/MariaDB.repo
+echo "baseurl = http://yum.mariadb.org/10.3/centos7-amd64" >> /etc/yum.repos.d/MariaDB.repo
+echo "gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB" >> /etc/yum.repos.d/MariaDB.repo
+echo "gpgcheck=1" >> /etc/yum.repos.d/MariaDB.repo
+yum  install mariadb-server -y
+systemctl start mysql
+mysql_upgrade
+  ;;
+
+ "9" )
+sudo yum install -y php-{intl,bz2,bcmath,gd,mysql,sqlite3,soap,xsl,json,opcache,mbstring,readline,curl,mcrypt,xml,zip,redis}
+  ;;
+
+ "10" )
+wget https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
+tar -xzf ioncube_loaders_lin_x86-64.tar.gz
+cp ioncube/*.so /usr/lib64/php/modules
+echo "zend_extension = /usr/lib64/php/modules/ioncube_loader_lin_$io.so" >> /etc/php.ini
+systemctl restart httpd
+
+  ;;
+
+          * )
+
+   echo
+   echo "Нет данных."
+  ;;
+
+esac
+
+echo "Current version: $( php -v | head -n 1 | cut -c-7 )"
+
+echo
+
+exit 0
