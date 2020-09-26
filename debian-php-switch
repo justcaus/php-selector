@@ -7,6 +7,7 @@ clear # Очистка экрана
 echo "          Список"
 echo "          ------"
 echo "Выберите версию PHP:"
+echo "Current version: $( php -v | head -n 1 | cut -c-7 )"
 echo
 echo "[1] 7.0 PHP"
 echo "[2] 7.1 PHP"
