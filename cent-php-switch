@@ -22,8 +22,8 @@ echo
 
 read version
 
-
 io=$(php -v |head -n1 |cut -c5-7)
+exdir=$(php -i | grep extension_dir |head -n1 |cut -c18-39)
 
 
 case "$version" in
@@ -171,10 +171,11 @@ sudo yum install -y php-{intl,bz2,bcmath,gd,mysql,sqlite3,soap,xsl,json,opcache,
   ;;
 
  "10" )
+yum install wget -y
 wget https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
 tar -xzf ioncube_loaders_lin_x86-64.tar.gz
 cp ioncube/*.so /usr/lib64/php/modules
-echo "zend_extension = /usr/lib64/php/modules/ioncube_loader_lin_$io.so" >> /etc/php.ini
+echo "zend_extension = $exdir/ioncube_loader_lin_$io.so" >> /etc/php.ini
 systemctl restart httpd
 
   ;;
