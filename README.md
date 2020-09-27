@@ -3,6 +3,8 @@ TAR Архив текущего каталога (берет пут до тек 
 
 tar -czf "../${PWD##*/}.tar.gz" .
 
+https://vestacp.com/docs/#config-log-location-debian-ubuntu
+
 
 MariaDB
 https://forum.vestacp.com/viewtopic.php?t=13370&start=30
