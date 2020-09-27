@@ -6,7 +6,7 @@ clear # Очистка экрана
 
 echo "          Список"
 echo "          ------"
-echo "Выберите версию Vesta-PHP:"
+echo "Выберите версию centos7-amd64-PHP:"
 echo "Current version: $( php -v | head -n 1 | cut -c-7 )"
 echo
 echo "[1] 7.0 PHP"
@@ -176,6 +176,7 @@ yum install wget -y
 wget https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
 tar -xzf ioncube_loaders_lin_x86-64.tar.gz
 cp ioncube/*.so /usr/lib64/php/modules
+sed -i '/zend_extension/d' /etc/php.ini
 echo "zend_extension = $exdir/ioncube_loader_lin_$io.so" >> /etc/php.ini
 systemctl restart httpd
 
