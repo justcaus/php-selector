@@ -1,0 +1,229 @@
+#!/bin/bash
+
+# JastCayz
+
+clear # Очистка экрана
+
+echo "          Список"
+echo "          ------"
+echo "Выберите версию centos7-amd64-PHP:"
+echo "Current version: $( php -v | head -n 1 | cut -c-7 )"
+echo
+echo "[1] 7.0 PHP"
+echo "[2] 7.1 PHP"
+echo "[3] 7.2 PHP"
+echo "[4] 7.3 PHP"
+echo "[5] 7.4 PHP"
+echo "[6] 5.6 PHP"
+echo "[7] PHP redis,php-memcache"
+echo "[8] mariadb 10.3"
+echo "[9] PHP Extension mysql,mbstring..."
+echo "[10] PHP ioncube"
+echo
+
+read version
+
+io=$(php -v |head -n1 |cut -c5-7)
+exdir=$(php -i | grep extension_dir |head -n1 |cut -c18-39)
+
+
+case "$version" in
+
+
+  "1" )
+sudo yum update -y && yum install wget -y > /dev/null
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+yum update -y
+yum-config-manager --disable remi-php74
+yum-config-manager --disable remi-php73
+yum-config-manager --disable remi-php72
+yum-config-manager --disable remi-php71
+yum-config-manager --disable remi-php70
+yum-config-manager --disable remi-php56
+yum-config-manager --disable remi-php5*
+yum-config-manager --disable remi-test
+yum-config-manager --enable remi-php70
+yum remove php* -y
+yum install -y php php70-php-imap php70-php-process php70-php-pspell php70-php-xml php70-php-xmlrpc php70-php-pdo php70-php-ldap php70-php-pecl-zip php70-php-common php70-php php70-php-mcrypt php70-php-gmp php70-php-mysqlnd php70-php-mbstring php70-php-gd php70-php-tidy php70-php-pecl-memcache --enablerepo=remi
+ln -s /usr/bin/php70 /usr/bin/php
+yum install phpmyadmin roundcubemail -y
+cp /etc/httpd/conf.d/roundcubemail.conf.rpmsave /etc/httpd/conf.d/roundcubemail.conf
+cp /etc/httpd/conf.d/phpMyAdmin.conf.rpmsave /etc/httpd/conf.d/phpMyAdmin.conf
+systemctl restart httpd
+  ;;
+
+  "2" )
+sudo yum update -y && yum install wget -y > /dev/null
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+yum update -y
+yum-config-manager --disable remi-php74
+yum-config-manager --disable remi-php73
+yum-config-manager --disable remi-php72
+yum-config-manager --disable remi-php71
+yum-config-manager --disable remi-php70
+yum-config-manager --disable remi-php56
+yum-config-manager --disable remi-php5*
+yum-config-manager --disable remi-test
+yum-config-manager --enable remi-php71
+yum remove php* -y
+yum install -y php php71-php-imap php71-php-process php71-php-pspell php71-php-xml php71-php-xmlrpc php71-php-pdo php71-php-ldap php71-php-pecl-zip php71-php-common php71-php php71-php-mcrypt php71-php-gmp php71-php-mysqlnd php71-php-mbstring php71-php-gd php71-php-tidy php71-php-pecl-memcache --enablerepo=remi
+ln -s /usr/bin/php71 /usr/bin/php
+yum install phpmyadmin roundcubemail -y
+cp /etc/httpd/conf.d/roundcubemail.conf.rpmsave /etc/httpd/conf.d/roundcubemail.conf
+cp /etc/httpd/conf.d/phpMyAdmin.conf.rpmsave /etc/httpd/conf.d/phpMyAdmin.conf
+systemctl restart httpd
+  ;;
+
+  "3" )
+sudo yum update -y && yum install wget -y > /dev/null
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+yum update -y
+yum-config-manager --disable remi-php74
+yum-config-manager --disable remi-php73
+yum-config-manager --disable remi-php72
+yum-config-manager --disable remi-php71
+yum-config-manager --disable remi-php70
+yum-config-manager --disable remi-php56
+yum-config-manager --disable remi-php5*
+yum-config-manager --disable remi-test
+yum-config-manager --enable remi-php72
+yum remove php* -y
+yum install -y php php72-php-imap php72-php-process php72-php-pspell php72-php-xml php72-php-xmlrpc php72-php-pdo php72-php-ldap php72-php-pecl-zip php72-php-common php72-php php72-php-mcrypt php72-php-gmp php72-php-mysqlnd php72-php-mbstring php72-php-gd php72-php-tidy php72-php-pecl-memcache --enablerepo=remi
+ln -s /usr/bin/php72 /usr/bin/php
+yum install phpmyadmin roundcubemail -y
+cp /etc/httpd/conf.d/roundcubemail.conf.rpmsave /etc/httpd/conf.d/roundcubemail.conf
+cp /etc/httpd/conf.d/phpMyAdmin.conf.rpmsave /etc/httpd/conf.d/phpMyAdmin.conf
+systemctl restart httpd
+  ;;
+
+  "4" )
+sudo yum update -y && yum install wget -y > /dev/null
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+yum update -y
+yum-config-manager --disable remi-php74
+yum-config-manager --disable remi-php73
+yum-config-manager --disable remi-php72
+yum-config-manager --disable remi-php71
+yum-config-manager --disable remi-php70
+yum-config-manager --disable remi-php56
+yum-config-manager --disable remi-php5*
+yum-config-manager --disable remi-test
+yum-config-manager --enable remi-php73
+yum remove php* -y
+yum install -y php php73-php-imap php73-php-process php73-php-pspell php73-php-xml php73-php-xmlrpc php73-php-pdo php73-php-ldap php73-php-pecl-zip php73-php-common php73-php php73-php-mcrypt php73-php-gmp php73-php-mysqlnd php73-php-mbstring php73-php-gd php73-php-tidy php73-php-pecl-memcache --enablerepo=remi
+ln -s /usr/bin/php73 /usr/bin/php
+yum install phpmyadmin roundcubemail -y
+cp /etc/httpd/conf.d/roundcubemail.conf.rpmsave /etc/httpd/conf.d/roundcubemail.conf
+cp /etc/httpd/conf.d/phpMyAdmin.conf.rpmsave /etc/httpd/conf.d/phpMyAdmin.conf
+systemctl restart httpd
+  ;;
+
+  "5" )
+sudo yum update -y && yum install wget -y > /dev/null
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+yum update -y
+yum-config-manager --disable remi-php74
+yum-config-manager --disable remi-php73
+yum-config-manager --disable remi-php72
+yum-config-manager --disable remi-php71
+yum-config-manager --disable remi-php70
+yum-config-manager --disable remi-php56
+yum-config-manager --disable remi-php5*
+yum-config-manager --disable remi-test
+yum-config-manager --enable remi-php74
+yum remove php* -y
+yum install -y php php74-php-imap php74-php-process php74-php-pspell php74-php-xml php74-php-xmlrpc php74-php-pdo php74-php-ldap php74-php-pecl-zip php74-php-common php74-php php74-php-mcrypt php74-php-gmp php74-php-mysqlnd php74-php-mbstring php74-php-gd php74-php-tidy php74-php-pecl-memcache --enablerepo=remi
+ln -s /usr/bin/php74 /usr/bin/php
+yum install phpmyadmin roundcubemail -y
+cp /etc/httpd/conf.d/roundcubemail.conf.rpmsave /etc/httpd/conf.d/roundcubemail.conf
+cp /etc/httpd/conf.d/phpMyAdmin.conf.rpmsave /etc/httpd/conf.d/phpMyAdmin.conf
+yum --enablerepo=remi update phpMyAdmin
+systemctl restart httpd
+  ;;
+
+  "6" )
+sudo yum update -y && yum install wget -y > /dev/null
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+yum update -y
+yum-config-manager --disable remi-php74
+yum-config-manager --disable remi-php73
+yum-config-manager --disable remi-php72
+yum-config-manager --disable remi-php71
+yum-config-manager --disable remi-php70
+yum-config-manager --disable remi-php56
+yum-config-manager --disable remi-php5*
+yum-config-manager --disable remi-test
+yum-config-manager --enable remi-php56
+yum remove php* -y
+yum install -y php php56-php-imap php56-php-process php56-php-pspell php56-php-xml php56-php-xmlrpc php56-php-pdo php56-php-ldap php56-php-pecl-zip php56-php-common php56-php php56-php-mcrypt php56-php-gmp php56-php-mysqlnd php56-php-mbstring php56-php-gd php56-php-tidy php56-php-pecl-memcache --enablerepo=remi
+ln -s /usr/bin/php56 /usr/bin/php
+yum install phpmyadmin roundcubemail -y
+cp /etc/httpd/conf.d/roundcubemail.conf.rpmsave /etc/httpd/conf.d/roundcubemail.conf
+cp /etc/httpd/conf.d/phpMyAdmin.conf.rpmsave /etc/httpd/conf.d/phpMyAdmin.conf
+systemctl restart httpd
+  ;;
+
+  "7" )
+sudo yum install -y php-memcache php-memcached php-redis  > /dev/null
+  ;;
+
+  "8" )
+systemctl stop mysql
+cp -r /var/lib/mysql /var/lib/mysqlbackup
+yum remove mariadb-server -y
+echo "[mariadb]" > /etc/yum.repos.d/MariaDB.repo
+echo "name = MariaDB" >> /etc/yum.repos.d/MariaDB.repo
+echo "baseurl = http://yum.mariadb.org/10.3/centos7-amd64" >> /etc/yum.repos.d/MariaDB.repo
+echo "gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB" >> /etc/yum.repos.d/MariaDB.repo
+echo "gpgcheck=1" >> /etc/yum.repos.d/MariaDB.repo
+yum  install mariadb-server -y
+systemctl start mysql
+mysql_upgrade
+  ;;
+
+ "9" )
+sudo yum install -y php-{intl,bz2,bcmath,gd,mysql,sqlite3,soap,xsl,json,opcache,mbstring,readline,curl,mcrypt,xml,zip,redis}
+  ;;
+
+ "10" )
+yum install wget -y
+wget https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
+tar -xzf ioncube_loaders_lin_x86-64.tar.gz
+cp ioncube/*.so /usr/lib64/php/modules
+sed -i '/zend_extension/d' /etc/php.ini
+echo "zend_extension = $exdir/ioncube_loader_lin_$io.so" >> /etc/php.ini
+systemctl restart httpd
+
+  ;;
+
+          * )
+
+   echo
+   echo "Нет данных."
+  ;;
+
+esac
+
+echo "Current version: $( php -v | head -n 1 | cut -c-7 )"
+
+echo
+
+exit 0
