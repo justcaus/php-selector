@@ -6,7 +6,7 @@ clear # Очистка экрана
 
 echo "          Список"
 echo "          ------"
-echo "Выберите версию Vesta-PHP:"
+echo "Установка версии Centos 7 Vesta-PHP:"
 echo
 echo "[1] 7.0 PHP"
 echo "[2] 7.1 PHP"
