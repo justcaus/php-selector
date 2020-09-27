@@ -6,7 +6,7 @@ clear # Очистка экрана
 
 echo "          Список"
 echo "          ------"
-echo "Выберите версию PHP:"
+echo "Выберите версию PHP Debian 8:"
 echo "Current version: $( php -v | head -n 1 | cut -c-7 )"
 echo
 echo "[1] 7.0 PHP"
@@ -16,7 +16,7 @@ echo "[4] 7.3 PHP"
 echo "[5] 7.4 PHP"
 echo "[6] 5.6 PHP"
 echo "[7] PHP redis,php-memcache"
-echo "[8] PHP redis,php-memcache"
+echo "[8] ioncube install"
 echo
 
 read version
@@ -149,6 +149,7 @@ apt-get install wget -y
 wget https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
 tar -xzf ioncube_loaders_lin_x86-64.tar.gz
 cp ioncube/*.so /usr/lib64/php/modules
+sed -i '/zend_extension/d' /etc/php.ini
 echo "zend_extension = $exdir/ioncube_loader_lin_$io.so" >> /etc/php.ini
 systemctl restart apache2
 
