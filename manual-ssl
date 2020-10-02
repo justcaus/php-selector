@@ -1,3 +1,5 @@
+SSL FOR APACHE https://1cloud.ru/help/ssl/installsslapache
+
 sudo mkdir -p /var/www/example.com/public_html
 sudo mkdir -p /var/www/test.com/public_html
 
@@ -28,3 +30,5 @@ sudo nano /etc/hosts
 127.0.0.1   localhost
 127.0.1.1   guest-desktop
 111.111.111.111 example.com
+
+From here: https://www.digitalocean.com/community/tutorials/apache-ubuntu-14-04-lts-ru
