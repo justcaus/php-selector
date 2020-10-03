@@ -2,4 +2,4 @@ sudo nano /usr/local/vesta/conf/vesta.conf
 
 И в самом низу добавьте строку:
 
-FILEMANAGER_KEY='ILOVE'
+FILEMANAGER_KEY='ILOVEREO'
