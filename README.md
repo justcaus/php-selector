@@ -16,3 +16,6 @@ https://1cloud.ru/help/ssl/installsslapache
 
 Пароль mysql:
 vi /root/.my.cnf
+
+PHP-RPM Switch
+https://sevo44.ru/php-ot-remi-dly-centos/
