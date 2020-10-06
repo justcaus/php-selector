@@ -19,3 +19,7 @@ vi /root/.my.cnf
 
 PHP-RPM Switch
 https://sevo44.ru/php-ot-remi-dly-centos/
+
+
+База помощи:
+https://fornex.com/help/?page=2
