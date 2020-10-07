@@ -1,0 +1,318 @@
+#!/bin/bash
+BLACK='\e[0;30m'
+BLUE='\e[0;34m'
+GREEN='\e[0;32m'
+CYAN='\e[0;36m'
+RED='\e[0;31m'
+PURPLE='\e[0;35m'
+BROWN='\e[0;33m'
+LIGHTGRAY='\e[0;37m'
+DARKGRAY='\e[1;30m'
+LIGHTBLUE='\e[1;34m'
+LIGHTGREEN='\e[1;32m'
+LIGHTCYAN='\e[1;36m'
+LIGHTRED='\e[1;31m'
+LIGHTPURPLE='\e[1;35m'
+YELLOW='\e[1;33m'
+WHITE='\e[1;37m'
+NC='\e[0m'              # No Color
+# Install Script [JastCayz]
+#
+exit_script()
+{
+  echo "* * *Trap * * *"
+  ./menu
+}
+
+phpswcent()
+{
+    clear
+    echo -e " ${CYAN} "
+	echo "  +-----------------------------------------------------------------------+ "
+    echo "  ¦¦¦                     Centos Switch PHP                             ¦¦¦ "
+    echo "  +-----------------------------------------------------------------------+ "                                                         
+echo "Enter a the php [ex.73] :"
+read phpv
+yum update -y && yum install wget -y > /dev/null
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+yum update -y
+yum-config-manager --disable remi-php*
+yum-config-manager --disable remi-test
+yum-config-manager --enable remi-php$phpv
+yum remove php* -y
+yum install -y php php$phpv-php-imap php$phpv-php-process php$phpv-php-pspell php$phpv-php-xml php$phpv-php-xmlrpc php$phpv-php-pdo php$phpv-php-ldap php$phpv-php-pecl-zip php$phpv-php-common php$phpv-php php$phpv-php-mcrypt php$phpv-php-gmp php$phpv-php-mysqlnd php$phpv-php-mbstring php$phpv-php-gd php$phpv-php-tidy php$phpv-php-pecl-memcache --enablerepo=remi
+ln -s /usr/bin/php$phpv /usr/bin/php
+yum install phpmyadmin roundcubemail -y
+cp /etc/httpd/conf.d/roundcubemail.conf.rpmsave /etc/httpd/conf.d/roundcubemail.conf
+cp /etc/httpd/conf.d/phpMyAdmin.conf.rpmsave /etc/httpd/conf.d/phpMyAdmin.conf
+systemctl restart httpd
+}
+
+ioncube()
+{
+    clear
+    echo -e " ${CYAN} "
+	echo "  +-----------------------------------------------------------------------+ "
+    echo "  ¦¦¦                          Install ionCube                          ¦¦¦ "
+    echo "  +-----------------------------------------------------------------------+ "                                                         
+echo "Enter current php [ex.7.3] :"
+php -v |head -n1 |cut -c5-7
+read vph
+exdir=$(php -i | grep extension_dir |head -n1 |cut -c18-38)
+io=$(php -v |head -n1 |cut -c5-7)
+apt-get install wget -y
+wget https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
+tar -xzf ioncube_loaders_lin_x86-64.tar.gz
+cp ioncube/*.so $exdir
+sed -i '/zend_extension/d' /etc/php/$vph/apache2/php.ini
+echo "zend_extension = $exdir/ioncube_loader_lin_$io.so" >> /etc/php/$vph/apache2/php.ini
+systemctl restart apache2  
+}
+
+ion()
+{
+    clear
+    echo -e " ${CYAN} "
+	echo "  +-----------------------------------------------------------------------+ "
+    echo "  ¦¦¦                          Install ionCube                          ¦¦¦ "
+    echo "  +-----------------------------------------------------------------------+ "   
+io=$(php -v |head -n1 |cut -c5-7)
+exdir=$(php -i | grep extension_dir |head -n1 |cut -c18-39)                                                      
+yum install wget -y
+wget https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
+tar -xzf ioncube_loaders_lin_x86-64.tar.gz
+cp ioncube/*.so /usr/lib64/php/modules
+sed -i '/zend_extension/d' /etc/php.ini
+echo "zend_extension = $exdir/ioncube_loader_lin_$io.so" >> /etc/php.ini
+systemctl restart httpd   
+}
+
+phpd()
+{
+    clear
+    echo -e " ${BLUE} "
+	echo "  +-----------------------------------------------------------------------+ "
+    echo "  ¦¦¦                        Switch PHP version Debian                  ¦¦¦ "
+    echo "  +-----------------------------------------------------------------------+ "                                                         
+echo "Enter version php [ex.: 7.2] :"
+read phpd
+apt-get update > /dev/null
+apt-get -y install lsb-release apt-transport-https ca-certificates > /dev/null
+wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg > /dev/null
+echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/php.list > /dev/null
+apt-get update -y > /dev/null
+apt-get install -y php$phpd php$phpd-common php$phpd-cli > /dev/null
+apt-get install -y php$phpd-gd php$phpd-mysql php$phpd-sqlite3 php$phpd-soap php$phpd-xsl php$phpd-json php$phpd-opcache php$phpd-mbstring php$phpd-readline php$phpd-curl php$phpd-mcrypt php$phpd-xml php$phpd-zip php-redis > /dev/null
+a2dismod php7.4
+a2dismod php7.3
+a2dismod php7.2
+a2dismod php7.1
+a2dismod php7.0
+a2dismod php5.6
+a2enmod php$phpd
+service apache2 restart
+ln -sfn /usr/bin/php$phpd /etc/alternatives/php
+}
+
+ssl()
+{
+    clear
+    echo -e " ${BLUE} "
+	echo "  +-----------------------------------------------------------------------+ "
+    echo "  ¦¦¦                        Install SSL                      ¦¦¦ "
+    echo "  +-----------------------------------------------------------------------+ "                                                         
+echo "write website (ex.: website.com) :"
+read domain
+touch /etc/ssl/$domain-crt.crt
+touch /etc/ssl/$domain-ca.crt
+touch /etc/ssl/$domain-priv.key
+a2enmod ssl
+yum install mod_ssl
+echo "SSLEngine on *:80>" >> /etc/apache2/sites-enabled/$domain.conf
+echo "SSLCertificateFile /etc/ssl/$domain_crt.crt" >> /etc/apache2/sites-enabled/$domain.conf
+echo "SSLCertificateChainFile /etc/ssl/$domain_ca.crt" >> /etc/apache2/sites-enabled/$domain.conf
+echo "SSLCertificateKeyFile /etc/ssl/$domain_priv.key" >> /etc/apache2/sites-enabled/$domain.conf
+echo "Open your Linux iptable (Deb/Cent/Ubun)"
+ufw allow 443/tcp
+iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 443 -j ACCEPT
+iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+}
+
+vestadeb()
+{
+    clear
+    echo -e " ${BLUE} "
+	echo "  +-----------------------------------------------------------------------+ "
+    echo "  ¦¦¦                        Install VestaCP Debian                     ¦¦¦ "
+    echo "  +-----------------------------------------------------------------------+ "                                                         
+echo "Ready to install"
+wget http://vestacp.com/pub/vst-install.sh
+apt-get update -y > /dev/null
+bash vst-install.sh
+
+}
+
+vestacen()
+{
+    clear
+    echo -e " ${BLUE} "
+	echo "  +-----------------------------------------------------------------------+ "
+    echo "  ¦¦¦                        Install VestaCP Centos                     ¦¦¦ "
+    echo "  +-----------------------------------------------------------------------+ "                                                         
+echo "Enter PHP version (ex.: 72)"
+read vphp
+echo "Ready to install"
+yum update -y > /dev/null
+curl -O http://vestacp.com/pub/vst-install.sh
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm 
+yum install epel-release wget yum-utils -y
+echo "[mariadb]" > /etc/yum.repos.d/MariaDB.repo
+echo "name = MariaDB" >> /etc/yum.repos.d/MariaDB.repo
+echo "baseurl = http://yum.mariadb.org/10.3/centos7-amd64" >> /etc/yum.repos.d/MariaDB.repo
+echo "gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB" >> /etc/yum.repos.d/MariaDB.repo
+echo "gpgcheck=1" >> /etc/yum.repos.d/MariaDB.repo
+yum update -y
+yum-config-manager --enable remi-php$vphp
+bash vst-install.sh
+
+}
+
+maria()
+{
+    clear
+    echo -e " ${BLUE} "
+	echo "  +-----------------------------------------------------------------------+ "
+    echo "  ¦¦¦                        Upgrade MariaDB to 10.3                    ¦¦¦ "
+    echo "  +-----------------------------------------------------------------------+ "                                                         
+systemctl stop mysql
+cp -r /var/lib/mysql /var/lib/mysqlbackup
+yum remove mariadb-server -y
+echo "[mariadb]" > /etc/yum.repos.d/MariaDB.repo
+echo "name = MariaDB" >> /etc/yum.repos.d/MariaDB.repo
+echo "baseurl = http://yum.mariadb.org/10.3/centos7-amd64" >> /etc/yum.repos.d/MariaDB.repo
+echo "gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB" >> /etc/yum.repos.d/MariaDB.repo
+echo "gpgcheck=1" >> /etc/yum.repos.d/MariaDB.repo
+yum  install mariadb-server -y
+systemctl start mysql
+mysql_upgrade
+
+}
+
+ispman()
+{
+    clear
+    echo -e " ${BLUE} "
+	echo "  +-----------------------------------------------------------------------+ "
+    echo "  ¦¦¦                        Install ISPmanager                         ¦¦¦ "
+    echo "  +-----------------------------------------------------------------------+ "                                                         
+wget "http://download.ispsystem.com/install.sh" && sh install.sh
+echo "Note : Open iptables port 1500"
+iptables -A INPUT -p tcp --dport 1500 -j ACCEPT
+echo "Note : Done"
+}
+
+ispup()
+{
+    clear
+    echo -e " ${BLUE} "
+	echo "  +-----------------------------------------------------------------------+ "
+    echo "  ¦¦¦                        Upgrade ISPmanager                         ¦¦¦ "
+    echo "  +-----------------------------------------------------------------------+ "                                                         
+/usr/local/mgr5/sbin/pkgupgrade.sh coremanager
+echo "Note : Done"
+}
+
+swap()
+{
+    clear
+    echo -e " $CYAN} "
+    echo "               SWAP FILE "   
+echo "Enter size SWAP (1024-2048) :"
+read swap
+dd if=/dev/zero of=/swapfile bs=$swap count=1048576
+}
+
+vestafile()
+{
+    clear
+    echo -e " ${BLUE} "
+	echo "  +-----------------------------------------------------------------------+ "
+    echo "  ¦¦¦                        VestaCP Install FileManager                ¦¦¦ "
+    echo "  +-----------------------------------------------------------------------+ "                                                         
+echo "FILEMANAGER_KEY='ILOVEREO'" >> /usr/local/vesta/conf/vesta.conf
+}
+
+exit_script1()
+{
+  exit 1
+}
+
+Take_input1()
+{
+clear
+while :
+do
+clear
+echo -e "${WHITE}Created By JastCayz${RED}                 GitHub:"${LIGHTBLUE}github.com/justcaus
+echo -e "${WHITE}
+"${WHITE}
+    echo -e "${WHITE}Note: "${GREEN}TO EXIT A SCRIPT OR STOP PRESS [CTRL+C]
+    echo -e "${GREEN}[=================================~Debian~=====================================]"
+	echo -e "${LIGHTBLUE}[1]${GREEN}Install VestaCP${LIGHTBLUE}                                       [5]${GREEN}X"                                                                                         																									
+    echo -e "${LIGHTBLUE}[2]${GREEN}PHP Switch${LIGHTBLUE}                                            [6]${GREEN}X"
+    echo -e "${LIGHTBLUE}[3]${GREEN}ionCube${LIGHTBLUE}                                               [7]${LIGHTBLUE}X"
+    echo -e "${LIGHTBLUE}[4]${GREEN}CertBot${LIGHTBLUE}                                               [8]${GREEN}X"
+    echo -e ""                                                                 
+    echo -e "${PURPLE}[================================~Centos~=====================================]"
+    echo -e "${LIGHTBLUE}[9]${GREEN}Install VestaCP${LIGHTBLUE}                                       [12]${GREEN}MariaDB 10.3"
+	echo -e "${LIGHTBLUE}[10]${GREEN}PHP Switch${LIGHTBLUE}                                           [13]${GREEN}CertBot"
+	echo -e "${LIGHTBLUE}[11]${GREEN}ionCube${LIGHTBLUE}                                              [14]${GREEN}X"
+    echo -e ""
+    echo -e "${PURPLE}[================================~Other~=====================================]"
+    echo -e "${LIGHTBLUE}[15]${GREEN}ISP upgrade${LIGHTBLUE}                                          [18]${GREEN}Swap"
+	echo -e "${LIGHTBLUE}[16]${GREEN}Ubuntu CertBot${LIGHTBLUE}                                       [19]${GREEN}VestaCP FileManager"
+	echo -e "${LIGHTBLUE}[17]${GREEN}ISPmanager Install${LIGHTBLUE}                                   [20]${GREEN}Install SSL"
+    echo -e ""
+    echo -n "#TestScript - Menu [1-20]: "
+    read yourch
+    case $yourch in
+      1) vestadeb ;;
+      2) phpd ;;
+      3) ioncube ;;
+	  4) X ;;
+      5) X ;;
+      6) X ;;
+	  7) X ;;
+	  8) X ;;
+	  9) vestacen ;;
+	  10) phpswcent ;;
+	  11) ion ;;
+	  12) maria ;;
+	  13) X ;;
+      ex) echo "As you Command" ;  exit 1  ;;
+	  14) X  ;;
+      15) ispup ;;
+      16) X ;;
+      17) ispman ;;
+	  18) swap ;;
+	  19) vestafile ;;
+      20) ssl ;;
+      *) echo "Invalid Selection, Please make another selection between [1-11]" ;
+         echo "Press Enter. . ." ; read ;;
+ esac
+done # end_while
+}
+#
+# Set trap to for CTRL+C interrupt i.e. Install our error handler
+# When occurs it first it calls del_file() and then exit
+#
+trap exit_script1
+#
+# Call our user define function : Take_input1
+#
+Take_input1
